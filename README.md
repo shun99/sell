@@ -1,21 +1,14 @@
-# sell
-
-> ele spa
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+> 这是一个慕课网基于vue的一个学习教程。
+# init
+初始化工程
+# 模拟数据
+# 引入字体
+创建项目目录
+# 修改配置
+- 删除一些不必要的文件
+- 引入reset.css
+- 修改.eslintrc.js，更改检查配置，必须添加分号，忽略缩进检查
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+ 'semi': ['error', 'always'],
+ 'indent': 0
+```
