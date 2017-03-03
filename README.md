@@ -38,3 +38,4 @@ export default new Router({
 ```
 Uncaught Error: [vue-router] "path" is required in a route configuration.
 ```
+# Header, Tab组件
