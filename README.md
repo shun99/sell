@@ -39,3 +39,10 @@ export default new Router({
 Uncaught Error: [vue-router] "path" is required in a route configuration.
 ```
 # Header, Tab组件
+
+# 安装stylus-loader
+需要安装stylus
+```
+"stylus": "^0.54.5",
+"stylus-loader": "^2.5.0",
+```
