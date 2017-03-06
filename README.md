@@ -46,3 +46,16 @@ Uncaught Error: [vue-router] "path" is required in a route configuration.
 "stylus": "^0.54.5",
 "stylus-loader": "^2.5.0",
 ```
+
+# vue-router
+- 增加别名component
+webpack.base.conf.js 中配置别名component
+```
+resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'component': resolve('src/components')
+    }
+```
