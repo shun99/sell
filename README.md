@@ -62,3 +62,5 @@ resolve: {
 # 1px问题
 在web端1像素，可能在手机上显示不是1px引发的。
 # vue-resource
+# 父组件向子组件传递数据
+App.vue向Header.vue传递数据。
