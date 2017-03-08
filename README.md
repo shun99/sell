@@ -59,3 +59,5 @@ resolve: {
       'component': resolve('src/components')
     }
 ```
+# 1px问题
+在web端1像素，可能在手机上显示不是1px引发的。
