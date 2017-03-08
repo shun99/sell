@@ -48,6 +48,7 @@
   .header
     color: #ffffff
     position: relative
+    overflow: hidden
     background: rgba(7, 17, 27, 0.5)
     .content-wrapper
       position: relative

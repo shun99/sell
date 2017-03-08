@@ -83,3 +83,11 @@ p{width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 absolute 是最棘手的position值。 absolute 与 fixed 的表现类似，但是它不是相对于视窗而是相对于最近的“positioned”祖先元素。如果绝对定位（position属性的值为absolute）的元素没有“positioned”祖先元素，那么它是相对于文档的 body 元素，并且它会随着页面滚动而移动。记住一个“positioned”元素是指 position 值不是 static 的元素
 元素框从文档流完全删除，并相对于其包含块定位。包含块可能是文档中的另一个元素或者是初始包含块。元素原先在正常文档流中所占的空间会关闭，就好像元素原来不存在一样。元素定位后生成一个块级框，而不论原来它在正常流中生成何种类型的框。
 ***不要轻易设置absolute父元素的宽度，否者，当父元素内容充满，该元素会被挤出视图内，虽然absolute元素脱离了父元素的文档流，如果不设置宽度则不会被挤出*
+### 修复头组件内容溢出
+overflow: hidden
+这个属性定义溢出元素内容区的内容会如何处理。
+visible	默认值。内容不会被修剪，会呈现在元素框之外。
+hidden	内容会被修剪，并且其余内容是不可见的。
+scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+inherit	规定应该从父元素继承 overflow 属性的值。
