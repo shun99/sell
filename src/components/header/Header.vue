@@ -63,15 +63,20 @@
         vertical-align: top
         display: inline-block
         .title
-          font-size: 16px
           .brand
             vertical-align: top
             display: inline-block
             width: 30px
-            height: 18px
+            height: 16px
             bg-image('brand')
             background-repeat: no-repeat
-            background-size: 30px 18px
+            background-size: 30px 16px
+          .name
+            vertical-align: top
+            margin-left 6px
+            font-size: 16px
+            line-height: 16px
+            font-weight: bold
         .description
           margin-top: 8px
           font-size: 12px
@@ -82,8 +87,8 @@
             display: inline-block
             width: 12px
             height: 12px
-            background-repeat: no-repeat
             background-size 12px 12px
+            background-repeat: no-repeat
             &.decrease
               bg-image('decrease_1')
             &.discount
@@ -97,6 +102,7 @@
           .text
             margin-left: 4px
             font-size: 10px
+            line-height: 12px
       .support-count
         position: absolute
         right: 12px
@@ -136,6 +142,7 @@
         vertical-align: top
       .bulletin-text
         font-size: 10px
+        margin-top: 9px
         vertical-align: top
         margin-left: 4px
         margin-right: 4px
