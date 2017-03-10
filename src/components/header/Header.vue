@@ -12,7 +12,7 @@
         <div class="description">
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
         </div>
-        <div v-if="seller.supports" class="support">
+        <div v-if="seller.supports" class="support-wrapper">
           <span class="icon" :class="classMap[seller.supports[0].type]"></span>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
@@ -23,9 +23,8 @@
       </div>
     </div>
     <div class="bulletin-wrapper" @click="changeDetailShowStatus(true)">
-      <span class="bulletin-title"></span>
-      <span class="bulletin-text">{{seller.bulletin}}</span>
-      <i class="icon-keyboard_arrow_right"></i>
+      <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span><i
+      class="icon-keyboard_arrow_right"></i>
     </div>
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%">
@@ -39,6 +38,17 @@
         <div class="item-wrapper">
           <div class="line"></div>
           <div class="text">优惠信息</div>
+          <div class="line"></div>
+        </div>
+        <li v-if="seller.supports" class="support-wrapper">
+          <ul v-for="(item, index) in seller.supports" class="support-item">
+            <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+            <span class="text">{{seller.supports[index].description}}</span>
+          </ul>
+        </li>
+        <div class="item-wrapper">
+          <div class="line"></div>
+          <div class="text">商家公告</div>
           <div class="line"></div>
         </div>
       </div>
@@ -107,14 +117,15 @@
         .description
           margin-top: 8px
           font-size: 12px
-        .support
+        .support-wrapper
           margin-top: 10px
+          font-size: 0px
           .icon
             vertical-align: top
             display: inline-block
             width: 12px
             height: 12px
-            background-size 12px 12px
+            background-size: 12px 12px
             background-repeat: no-repeat
             &.decrease
               bg-image('decrease_1')
@@ -127,8 +138,9 @@
             &.special
               bg-image('special_1')
           .text
+            vertical-align: top
             margin-left: 4px
-            font-size: 10px
+            font-size: 12px
             line-height: 12px
       .support-count
         position: absolute
@@ -152,7 +164,7 @@
     .bulletin-wrapper
       background: rgba(7, 17, 27, 0.2)
       padding-left: 12px
-      padding-right: 12px
+      padding-right: 20px
       height: 28px
       line-height: 28px
       white-space: nowrap
@@ -168,15 +180,15 @@
         background-repeat: no-repeat
         vertical-align: top
       .bulletin-text
-        font-size: 10px
+        font-size: 12px
         margin-top: 9px
         vertical-align: top
         margin-left: 4px
         margin-right: 4px
       .icon-keyboard_arrow_right
         position: absolute
-        right: 0px
-        font-size: 10px
+        right: 12px
+        font-size: 12px
         vertical-align: top
         margin-top: 9px
     .background
@@ -226,6 +238,35 @@
             padding: 0 12px
             font-weight: 700
             font-size: 14px
+        .support-wrapper
+          padding: 0px 12px
+          .support-item
+            margin-bottom: 12px
+            font-size: 0
+            &:last-child
+              margin-bottom: 0px
+            .icon
+              vertical-align: top
+              display: inline-block
+              width: 16px
+              height: 16px
+              background-size 16px 16px
+              background-repeat: no-repeat
+              &.decrease
+                bg-image('decrease_1')
+              &.discount
+                bg-image('discount_1')
+              &.guarantee
+                bg-image('guarantee_1')
+              &.invoice
+                bg-image('invoice_1')
+              &.special
+                bg-image('special_1')
+            .text
+              vertical-align: top
+              margin-left: 6px
+              font-size: 12px
+              line-height: 16px
       .detail-close
         font-size: 32px
         width: 32px
