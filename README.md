@@ -93,3 +93,52 @@ auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的
 inherit	规定应该从父元素继承 overflow 属性的值。
 # Sticky Footer
 # flex 自适应
+# star
+
+## Star.vue
+### stylus的& 提高类的等级，使得与父元素同级。
+如下，star-48与star同级别，on与star-item同级别。*虽然on与star-item同级别，但是只有使用了star-item才能使用到on*
+
+```
+.star
+    font-size: 0
+    .star-item-1
+      display: inline-block
+      background-repeat: no-repeat
+    &.star-48
+      .star-item
+        width: 20px
+        height: 20px
+        margin-right: 22px
+        background-size: 20px 20px
+        &:last-child
+          margin-right: 0
+        &.on
+          bg-image('star48_on')
+        &.half
+          bg-image('star48_half')
+        &.off
+          bg-image('star48_off')
+```
+如下，当直接使得on与star-item同级别，而不是通过&来提升级级别的时候，*不使用star-item也能使用到on*
+```
+.star
+    font-size: 0
+    .star-item-1
+      display: inline-block
+      background-repeat: no-repeat
+    &.star-48
+      .star-item
+        width: 20px
+        height: 20px
+        margin-right: 22px
+        background-size: 20px 20px
+      :last-child
+        margin-right: 0
+      .on
+        bg-image('star48_on')
+      .half
+        bg-image('star48_half')
+      .off
+        bg-image('star48_off')
+```
