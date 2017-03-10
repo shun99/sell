@@ -22,7 +22,7 @@
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="changeDetailShowStatus(true)">
       <span class="bulletin-title"></span>
       <span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
@@ -30,12 +30,38 @@
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%">
     </div>
+    <div class="detail-wrapper" v-show="isShowDetail">
+      <div class="detail-content clearfix">
+        <div class="name">{{seller.name}}</div>
+        <div class="star-wrapper">
+
+        </div>
+        <div class="item-wrapper">
+          <div class="line"></div>
+          <div class="text">优惠信息</div>
+          <div class="line"></div>
+        </div>
+      </div>
+      <div class="detail-close">
+        <i class="icon-close" @click="changeDetailShowStatus(false)"></i>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default{
     props: ['seller'],
+    data () {
+      return {
+        isShowDetail: false
+      };
+    },
+    methods: {
+      changeDetailShowStatus (isShow) {
+        this.isShowDetail = isShow;
+      }
+    },
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     }
@@ -161,5 +187,48 @@
       height: 100%
       z-index: -1
       filter: blur(10px)
-
+    .detail-wrapper
+      position: fixed
+      z-index: 100
+      top: 0px
+      left: 0px
+      width: 100%
+      height: 100%
+      overflow: auto
+      background: rgba(7, 17, 27, 0.8)
+      backdrop-filter: blur(30px)
+      opacity: 1
+      font-size: 0px
+      .detail-content
+        min-height: 100%
+        width: 100%
+        font-size: 12px
+        padding: 64px 36px
+        .name
+          font-size: 16px
+          line-height: 16px
+          font-weight: 700
+          text-align: center
+        .star-wrapper
+          margin-top: 16px
+          text-align: center
+        .item-wrapper
+          display: flex
+          width: 100%
+          margin-top: 28px
+          margin-bottom: 24px
+          .line
+            flex: 1
+            top: -6px
+            position: relative
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2)
+          .text
+            padding: 0 12px
+            font-weight: 700
+            font-size: 14px
+      .detail-close
+        font-size: 32px
+        width: 32px
+        height: 32px
+        margin: -64px auto 0px auto
 </style>
