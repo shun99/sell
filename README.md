@@ -162,3 +162,5 @@ child大小会占满parent，child内部居中。
 .parent{display:flex;align-items:center;}
 ```
 child会包裹内容，然后在父布局居中。
+# Good.vue content
+写content布局

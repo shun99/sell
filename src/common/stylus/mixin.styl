@@ -24,6 +24,10 @@ border-1px-bottom($color)
     border-top: 1px solid $color
     content: ' '
 
+border-none()
+  &:after
+    display: none
+
 //自动选择图片大小
 bg-image($url)
   background-image: url($url + "@2x.png")
