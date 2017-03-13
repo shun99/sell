@@ -8,12 +8,21 @@ border-1px($color)
     width: 100%
     position: absolute
     left: 0
-
   &:before
     top: 0
-
   &:after
     bottom: 0
+
+border-1px-bottom($color)
+  position: relative
+  &:after
+    display: block
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 100%
+    border-top: 1px solid $color
+    content: ' '
 
 //自动选择图片大小
 bg-image($url)

@@ -143,3 +143,22 @@ inherit	规定应该从父元素继承 overflow 属性的值。
         bg-image('star48_off')
 ```
 # 弹窗动画
+# Goods.vue
+goods侧边栏的处理。
+### 垂直居中方式
+- table
+```
+parent{
+    display: table
+}
+child{
+     display: table-cell
+     vertical-align: middle
+}
+```
+child大小会占满parent，child内部居中。
+- flex布局
+```
+.parent{display:flex;align-items:center;}
+```
+child会包裹内容，然后在父布局居中。

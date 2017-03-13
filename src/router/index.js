@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Goods from 'component/Goods';
+import Goods from 'component/goods/Goods';
 import Sellers from 'component/Sellers';
 import Ratings from 'component/Ratings';
 
