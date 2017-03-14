@@ -1,60 +1,78 @@
 <template>
   <div class="goods">
     <div class="goods-wrapper">
-      <ul class="side_wrapper">
-        <li v-for="(goods, index) in goodsList" class="side-item">
-          <span class="text border-1px"><span v-if="goods.type>0" class="icon" :class="classMap[goods.type]"></span>{{goods.name}}</span>
-        </li>
-      </ul>
-      <ul class="content_wrapper">
-        <li v-for="(goods, index) in goodsList">
-          <h1 class="title">{{goods.name}}</h1>
-          <ul class="food-wrapper">
-            <li v-for="(food, index) in goods.foods" class="food-item">
-              <img class="icon" width="57" height="57" :src="food.icon">
-              <div class="content">
-                <div class="name">{{food.name}}</div>
-                <div class="desc">{{food.description}}</div>
-                <div class="extra">
-                  <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+      <div class="side_wrapper" ref="goodsWrapper">
+        <ul>
+          <li v-for="(goods, index) in goodsList" class="side-item">
+            <span class="text border-1px"><span v-if="goods.type>0" class="icon" :class="classMap[goods.type]"></span>{{goods.name}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="content_wrapper" ref="contentWrapper">
+        <ul>
+          <li v-for="(goods, index) in goodsList">
+            <h1 class="title">{{goods.name}}</h1>
+            <ul class="food-wrapper">
+              <li v-for="(food, index) in goods.foods" class="food-item">
+                <img class="icon" width="57" height="57" :src="food.icon">
+                <div class="content">
+                  <div class="name">{{food.name}}</div>
+                  <div class="desc">{{food.description}}</div>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+                  </div>
+                  <div class="price">
+                    <span class="now">¥{{food.price}}</span>
+                    <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
+                  </div>
                 </div>
-                <div class="price">
-                  <span class="now">¥{{food.price}}</span>
-                  <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import BScroll from 'better-scroll';
+
   const NO_ERR = 0;
   export default{
     data () {
       return {
-        goodsList: []
+        goodsList: [],
+        scrollY: 0
       };
     },
+
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 
       this.$http.get('/api/goods').then(response => {
         if (response.body.errNo === NO_ERR) {
           this.goodsList = response.body.data;
+          this.$nextTick(() => {
+            this._initScroll();
+          });
         }
       }, response => {
 
       });
+    },
+    methods: {
+      _initScroll () {
+        this.meunScroll = new BScroll(this.$refs.goodsWrapper);
+
+        this.foodsScroll = new BScroll(this.$refs.contentWrapper);
+      }
     }
   };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixin.styl"
+  @import "../../common/stylus/mixin.styl";
 
   .goods
     position: absolute

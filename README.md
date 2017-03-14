@@ -164,3 +164,10 @@ child大小会占满parent，child内部居中。
 child会包裹内容，然后在父布局居中。
 # Good.vue content
 写content布局
+# 列表滚动
+- vue2.0 ref
+```
+<!-- vm.$refs.p will be the DOM node -->
+<div ref="p">hello</div>
+```
+ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素; 如果用在子组件上，引用就指向组件实例:
