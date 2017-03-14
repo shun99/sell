@@ -3,14 +3,15 @@
     <div class="goods-wrapper">
       <div class="side_wrapper" ref="goodsWrapper">
         <ul>
-          <li v-for="(goods, index) in goodsList" class="side-item">
+          <li v-for="(goods, index) in goodsList" class="side-item" :class="{'current':currentIndex===index}"
+              @click="clickSideItem(index, $event)">
             <span class="text border-1px"><span v-if="goods.type>0" class="icon" :class="classMap[goods.type]"></span>{{goods.name}}</span>
           </li>
         </ul>
       </div>
       <div class="content_wrapper" ref="contentWrapper">
         <ul>
-          <li v-for="(goods, index) in goodsList">
+          <li v-for="(goods, index) in goodsList" ref="foodList">
             <h1 class="title">{{goods.name}}</h1>
             <ul class="food-wrapper">
               <li v-for="(food, index) in goods.foods" class="food-item">
@@ -43,29 +44,65 @@
     data () {
       return {
         goodsList: [],
-        scrollY: 0
+        scrollY: 0,
+        classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
+        listHeight: []
       };
     },
 
     created () {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-
       this.$http.get('/api/goods').then(response => {
         if (response.body.errNo === NO_ERR) {
           this.goodsList = response.body.data;
           this.$nextTick(() => {
             this._initScroll();
+            this._calculateHeight();
           });
         }
-      }, response => {
-
       });
+    },
+    computed: {
+      currentIndex () {
+        console.log('...');
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i];
+          let height2 = this.listHeight[i + 1];
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            return i;
+          }
+        }
+        return 0;
+      }
     },
     methods: {
       _initScroll () {
-        this.meunScroll = new BScroll(this.$refs.goodsWrapper);
+        this.meunScroll = new BScroll(this.$refs.goodsWrapper, {click: true});
 
-        this.foodsScroll = new BScroll(this.$refs.contentWrapper);
+        this.foodsScroll = new BScroll(this.$refs.contentWrapper, {probeType: 3});
+
+        this.foodsScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(Math.round(pos.y));
+        });
+      },
+
+      _calculateHeight () {
+        let foodList = this.$refs.foodList;
+        let height = 0;
+        this.listHeight.push(height);
+        for (let i = 0; i < foodList.length; i++) {
+          let item = foodList[i];
+          height += item.clientHeight;
+          this.listHeight.push(height);
+        }
+      },
+
+      clickSideItem (index, event) {
+        if (!event._constructed) {
+          return;
+        }
+        let foodList = this.$refs.foodList;
+        let el = foodList[index];
+        this.foodsScroll.scrollToElement(el, 300);
       }
     }
   };
@@ -94,6 +131,13 @@
           padding: 0px 12px
           height: 54px
           font-size: 0px
+          &.current
+            background: #fff
+            .text
+              border-none()
+          &:last-child
+            .text
+              border-none()
           .text
             width: 100%
             display: table-cell

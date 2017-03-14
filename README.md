@@ -171,3 +171,24 @@ child会包裹内容，然后在父布局居中。
 <div ref="p">hello</div>
 ```
 ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素; 如果用在子组件上，引用就指向组件实例:
+
+# 列表联动
+### 计算属性与methods方法
+
+我们可以将同一函数定义为一个 method 而不是一个计算属性。对于最终的结果，两种方式确实是相同的。然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+```
+//调用方式reversedMessage()
+methods: {
+  reversedMessage: function () {
+    return Date.now()
+  }
+}
+//调用方式reversedMessage
+computed: {
+  reversedMessage: function () {
+    return Date.now()
+  }
+}
+```
+
+
