@@ -194,5 +194,4 @@ computed: {
 购物车样式
 # ShopCardControl
 # 动画
-
-
+# ShopCard与ShopCardControl联动
