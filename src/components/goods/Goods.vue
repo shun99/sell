@@ -27,6 +27,7 @@
                     <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
                   </div>
                 </div>
+                <shopcardcontrol class="control" :food="food"></shopcardcontrol>
               </li>
             </ul>
           </li>
@@ -40,6 +41,7 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
   import ShopCard from 'component/shopcard/ShopCard';
+  import ShopCardControl from 'component/shopcardcontrol/ShopCardControl';
 
   const NO_ERR = 0;
   export default{
@@ -53,7 +55,8 @@
     },
 
     components: {
-      'shopcard': ShopCard
+      'shopcard': ShopCard,
+      'shopcardcontrol': ShopCardControl
     },
 
     created () {
@@ -81,9 +84,14 @@
     },
     methods: {
       _initScroll () {
-        this.meunScroll = new BScroll(this.$refs.goodsWrapper, {click: true});
+        this.meunScroll = new BScroll(this.$refs.goodsWrapper, {
+          click: true
+        });
 
-        this.foodsScroll = new BScroll(this.$refs.contentWrapper, {probeType: 3});
+        this.foodsScroll = new BScroll(this.$refs.contentWrapper, {
+          click: true,
+          probeType: 3
+        });
 
         this.foodsScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y));
@@ -223,6 +231,10 @@
                   font-size: 14px
                   color: rgb(147, 153, 159)
 
+            .control
+              position: absolute
+              right: 0px
+              bottom: 6px
     .shopCard
       position: fixed
       bottom: 0px
