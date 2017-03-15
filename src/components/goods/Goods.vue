@@ -33,11 +33,13 @@
         </ul>
       </div>
     </div>
+    <shopcard class="shopCard"></shopcard>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
+  import ShopCard from 'component/shopcard/ShopCard';
 
   const NO_ERR = 0;
   export default{
@@ -48,6 +50,10 @@
         classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
         listHeight: []
       };
+    },
+
+    components: {
+      'shopcard': ShopCard
     },
 
     created () {
@@ -63,7 +69,6 @@
     },
     computed: {
       currentIndex () {
-        console.log('...');
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[i];
           let height2 = this.listHeight[i + 1];
@@ -115,7 +120,7 @@
     position: absolute
     top: 172px
     left: 0px
-    bottom: 64px
+    bottom: 46px
     right: 0px
     overflow: hidden
     .goods-wrapper
@@ -218,4 +223,8 @@
                   font-size: 14px
                   color: rgb(147, 153, 159)
 
+    .shopCard
+      position: fixed
+      bottom: 0px
+      left: 0px
 </style>
