@@ -34,7 +34,8 @@
         </ul>
       </div>
     </div>
-    <shopcard class="shopCard"></shopcard>
+    <shopcard class="shopCard" :selectFoods="shopCardFoods" :deliveryPrice="seller.deliveryPrice"
+              :minTotalPrice="seller.minPrice"></shopcard>
   </div>
 </template>
 
@@ -45,6 +46,8 @@
 
   const NO_ERR = 0;
   export default{
+    props: ['seller'],
+
     data () {
       return {
         goodsList: [],
@@ -80,6 +83,17 @@
           }
         }
         return 0;
+      },
+      shopCardFoods () {
+        let foods = [];
+        this.goodsList.forEach((goods) => {
+          goods.foods.forEach((food) => {
+            if (food.count > 0) {
+              foods.push(food);
+            }
+          });
+        });
+        return foods;
       }
     },
     methods: {

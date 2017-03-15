@@ -15,7 +15,7 @@
 
   export default {
     props: {
-      food: {
+      'food': {
         type: Object
       }
     },

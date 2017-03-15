@@ -17,44 +17,48 @@
   </div>
 </template>
 
+
 <script type="text/ecmascript-6">
   export default {
     props: {
-      'selectFoods': {
+      selectFoods: {
         type: Array,
         default () {
           return [
             {
               price: 11,
               count: 1
+            },
+            {
+              price: 11,
+              count: 2
             }
           ];
         }
       },
       'deliveryPrice': {
         type: Number,
-        default: 10
+        default: 0
       },
       'minTotalPrice': {
         type: Number,
-        default: 15
+        default: 10
       }
     },
     computed: {
       totalPrice () {
         let total = 0;
         this.selectFoods.forEach((food) => {
-          total = food.count * food.price;
+          total += food.count * food.price;
         });
         return total;
       },
       totalCount () {
-        let count = 0;
+        let total = 0;
         this.selectFoods.forEach((food) => {
-          count += food.count;
+          total += food.count;
         });
-        console.log(count);
-        return count;
+        return total;
       },
       payDesc () {
         if (this.totalPrice === 0) {
