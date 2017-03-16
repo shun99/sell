@@ -9,12 +9,14 @@
 - 删除一些不必要的文件
 - 引入reset.css
 - 修改.eslintrc.js，更改检查配置，必须添加分号，忽略缩进检查
+
 ```
  'semi': ['error', 'always'],
  'indent': 0
 ```
 # 修复bug
 - 当new一个对象为指定变量名时需要添加如下注释，规避检查
+
 ```
 /* eslint-disable no-new */
 ```
@@ -26,6 +28,7 @@
    ^
 ```
 - 如果在new Router声明routes字段，则不能为空
+
 ```
 export default new Router({
   routes: [
@@ -49,7 +52,9 @@ Uncaught Error: [vue-router] "path" is required in a route configuration.
 
 # vue-router
 - 增加别名component
-webpack.base.conf.js 中配置别名component
+
+> webpack.base.conf.js 中配置别名component
+
 ```
 resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -147,6 +152,7 @@ inherit	规定应该从父元素继承 overflow 属性的值。
 goods侧边栏的处理。
 ### 垂直居中方式
 - table
+
 ```
 parent{
     display: table
@@ -158,6 +164,7 @@ child{
 ```
 child大小会占满parent，child内部居中。
 - flex布局
+
 ```
 .parent{display:flex;align-items:center;}
 ```
@@ -166,6 +173,7 @@ child会包裹内容，然后在父布局居中。
 写content布局
 # 列表滚动
 - vue2.0 ref
+
 ```
 <!-- vm.$refs.p will be the DOM node -->
 <div ref="p">hello</div>
@@ -173,9 +181,18 @@ child会包裹内容，然后在父布局居中。
 ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素; 如果用在子组件上，引用就指向组件实例:
 
 # 列表联动
-### 计算属性与methods方法
+### 计算属性
 
-我们可以将同一函数定义为一个 method 而不是一个计算属性。对于最终的结果，两种方式确实是相同的。然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+#### 计算属性计算数据
+> 我们可以将同一函数定义为一个 method 而不是一个计算属性。对于最终的结果，两种方式确实是相同的。
+然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。
+这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，
+而不必再次执行函数。
+#### 计算属性监听数据
+> 计算属性里面用到this指向的值发生变化时，使用这个计算属性的地方也会发生相应的变化。
+因为计算属性本身也是数据，methods方法不是数据，是方法，这符合mvvm的思想，也正是如此
+计算属性不仅可以计算，也可以用来监听某一数据的变化。
+
 ```
 //调用方式reversedMessage()
 methods: {
@@ -196,3 +213,5 @@ computed: {
 # 动画
 # ShopCard与ShopCardControl联动
 # 购物车商品列表
+# 添加弹出动画
+在chrome中会颤动，但在手机上不会出现。完善细节

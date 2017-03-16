@@ -3,7 +3,7 @@
     <div class="card-content" @click="showList()">
       <div class="left-wrapper">
         <div class="logo-wrapper">
-          <div class="logo">
+          <div class="logo" :class="{'activity':totalCount>0}">
             <i class="icon-shopping_cart"></i>
           </div>
           <div class="num" v-show="totalCount>0">{{totalCount}}</div>
@@ -16,7 +16,7 @@
       </div>
     </div>
     <transition name="fold">
-      <div class="food-list-wrapper" v-show="fold">
+      <div class="food-list-wrapper" v-show="listStatus">
         <div class="head-wrapper">
           <span class="text">购物车</span>
           <span class="clear" @click="clear()">清空</span>
@@ -35,7 +35,7 @@
       </div>
     </transition>
     <transition name="mask">
-      <div class="mask" v-show="fold" @click="showList()"></div>
+      <div class="mask" v-show="listStatus" @click="showList()"></div>
     </transition>
   </div>
 </template>
@@ -73,7 +73,7 @@
     },
     data () {
       return {
-        'fold': false
+        'fold': true
       };
     },
     components: {
@@ -110,15 +110,15 @@
         } else {
           return 'enough';
         }
-      }
-    },
-    methods: {
-      showList () {
+      },
+      listStatus () {
+        console.log('cardStatus' + this.fold);
         if (!this.totalCount) {
-          return;
+          this.fold = true;
+          return false;
         }
-        this.fold = !this.fold;
-        if (this.fold) {
+        let show = !this.fold;
+        if (show) {
           this.$nextTick(() => {
             if (!this.scroll) {
               this.scroll = new BScroll(this.$refs.listContent, {
@@ -128,6 +128,16 @@
               this.scroll.refresh();
             }
           });
+        }
+        return show;
+      }
+    },
+    methods: {
+      showList () {
+        if (!this.totalCount) {
+          this.fold = true;
+        } else {
+          this.fold = !this.fold;
         }
       },
       clear () {
@@ -177,6 +187,10 @@
             border-radius: 50%
             text-align: center
             background: #2b343c
+            &.activity
+              background rgb(0, 160, 220)
+              .icon-shopping_cart
+                color: #fff
             .icon-shopping_cart
               line-height: 44px
               font-size: 24px
