@@ -195,3 +195,4 @@ computed: {
 # ShopCardControl
 # 动画
 # ShopCard与ShopCardControl联动
+# 购物车商品列表
