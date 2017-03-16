@@ -11,28 +11,32 @@
         <div class="price">￥{{totalPrice}}</div>
         <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
       </div>
-      <div class="right-wrapper" :class="payClass">
+      <div class="right-wrapper" :class="payClass" @click.stop="pay()">
         <span class="pay">{{payDesc}}</span>
       </div>
     </div>
-    <div class="food-list-wrapper" v-show="fold">
-      <div class="head-wrapper">
-        <span class="text">购物车</span>
-        <span class="clear" @click="clear()">清空</span>
+    <transition name="fold">
+      <div class="food-list-wrapper" v-show="fold">
+        <div class="head-wrapper">
+          <span class="text">购物车</span>
+          <span class="clear" @click="clear()">清空</span>
+        </div>
+        <div class="list-wrapper" ref="listContent">
+          <ul>
+            <li class="item-wrapper border-1px" v-for="(food, index) in selectFoods">
+              <span class="name">{{food.name}}</span>
+              <span class="price">￥{{food.price*food.count}}</span>
+              <div class="food-control">
+                <shopcardcontrol :food="food"></shopcardcontrol>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="list-wrapper" ref="listContent">
-        <ul>
-          <li class="item-wrapper" v-for="(food, index) in selectFoods">
-            <span class="name">{{food.name}}</span>
-            <span class="price">￥{{food.price*food.count}}</span>
-            <div class="food-control">
-              <shopcardcontrol :food="food"></shopcardcontrol>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="mask" v-show="fold" @click="showList()"></div>
+    </transition>
+    <transition name="mask">
+      <div class="mask" v-show="fold" @click="showList()"></div>
+    </transition>
   </div>
 </template>
 
@@ -131,6 +135,12 @@
           food.count = 0;
         });
         this.fold = false;
+      },
+      pay () {
+        if (this.totalPrice < this.minTotalPrice) {
+          return;
+        }
+        window.alert(`支付${this.totalPrice}元`);
       }
     }
   };
@@ -148,7 +158,6 @@
       display: flex
       background: #141d27
       color: rgba(255, 255, 255, 0.4)
-      z-index: 200
       .left-wrapper
         flex: 1
         z-index: 200
@@ -204,15 +213,18 @@
           padding-left: 12px
           font-size: 10px
       .right-wrapper
+        z-index: 200
         display: flex
         align-items: center
         justify-content: center
         width: 105px
         flex: 0 0 105px
         &.enough
+          z-index: 200
           background: #00b43c
           color: #fff
         &.nu-enough
+          z-index: 200
           background: #2b333b
         .pay
           line-height 24px
@@ -220,10 +232,14 @@
           font-weight 700px
     .food-list-wrapper
       position: fixed
-      z-index: 150
+      z-index: -50
       left: 0px
       bottom: 48px
       width: 100%
+      &.fold-enter-active, &.fold-leave-active
+        transition: all 0.2s
+      &.fold-enter, &.fold-leave-active
+        transform: translate3D(0, 100%, 0)
       .head-wrapper
         height: 40px
         width: 100%
@@ -244,6 +260,7 @@
         background: #fff
         padding-bottom: 25px
         max-height: 192px
+        overflow: hidden
         .item-wrapper
           display: flex
           height: 48px
@@ -264,11 +281,15 @@
             right: 0px
     .mask
       position: fixed
-      z-index: 100
+      z-index: -100
       top: 0px
       left: 0px
       bottom: 48px
       width: 100%
       background: rgba(7, 17, 27, 0.8)
       backdrop-filter: blur(30px)
+      &.mask-enter-active, &.mask-leave-active
+        transition: all 0.2s
+      &.mask-enter, &.mask-leave-active
+        opacity: 0
 </style>

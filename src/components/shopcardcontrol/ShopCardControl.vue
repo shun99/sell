@@ -25,6 +25,7 @@
         if (!event._constructed) {
           return;
         }
+        console.log('.....decreaseCard');
         if (this.food.count > 0) {
           this.food.count--;
         }
@@ -33,6 +34,7 @@
         if (!event._constructed) {
           return;
         }
+        console.log('.....increaseCard');
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {

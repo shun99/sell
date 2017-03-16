@@ -14,7 +14,7 @@
           <li v-for="(goods, index) in goodsList" ref="foodList">
             <h1 class="title">{{goods.name}}</h1>
             <ul class="food-wrapper">
-              <li v-for="(food, index) in goods.foods" class="food-item">
+              <li v-for="(food, index) in goods.foods" class="food-item border-1px">
                 <img class="icon" width="57" height="57" :src="food.icon">
                 <div class="content">
                   <div class="name">{{food.name}}</div>
