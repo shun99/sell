@@ -1,44 +1,63 @@
 <template>
-  <div class="food">
-    <div class="header-wrapper">
-      <img :src="food.image">
-      <div class="back" @click="back()">
-        <span class="icon-arrow_lift"></span>
-      </div>
-    </div>
-    <div class="des">
-      <h1 class="name">{{food.name}}</h1>
-      <div class="detail">
-        <span class="count">月售{{food.sellCount}}份</span>
-        <span class="rating">好评率{{food.rating}}%</span>
-      </div>
-      <div class="price">
-        <span class="now">¥{{food.price}}</span>
-        <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
-        <div class="control">
-          <div class="add">
-            <span>加入购物车</span>
-          </div>
-          <shopcardcontrol :shop="food"></shopcardcontrol>
+  <div class="food" ref="foodScroll" v-show="dialogStatus">
+    <div>
+      <div class="header-wrapper">
+        <img :src="food.image">
+        <div class="back" @click="back()">
+          <span class="icon-arrow_lift"></span>
         </div>
       </div>
-    </div>
-    <div class="blank border-1px"></div>
-    <div class="info" style="display: none">
-      <div class="title">商品介绍</div>
-      <div class="content">
-        <span v-if="food.info">{{food.info}}</span>
-        <span v-else="food.info">暂无详情</span>
+      <div class="des">
+        <h1 class="name">{{food.name}}</h1>
+        <div class="detail">
+          <span class="count">月售{{food.sellCount}}份</span>
+          <span class="rating">好评率{{food.rating}}%</span>
+        </div>
+        <div class="price">
+          <span class="now">¥{{food.price}}</span>
+          <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
+          <div class="control">
+            <div class="add">
+              <span>加入购物车</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="blank border-1px"></div>
+      <div class="info">
+        <div class="title">商品介绍</div>
+        <div class="content">
+          <span v-if="food.info">{{food.info}}</span>
+          <span v-else="food.info">暂无详情</span>
+        </div>
+      </div>
+      <div class="blank border-1px"></div>
+      <div class="ratingControl-container border-1px">
+        <ratingcontrol></ratingcontrol>
+      </div>
+      <div class="rating-list-wrapper">
+        <ul>
+          <li class="rating-item border-1px" v-for="rating in food.ratings">
+            <div class="user-info">
+              <span class="time">{{rating.rateTime}}</span>
+              <img class="avatar" :src="rating.avatar">
+              <span class="name">{{rating.username}}</span>
+            </div>
+            <div class="user-rating" v-show="rating.text">
+              <span :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}"></span>
+              <span class="text">{{rating.text}}</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="blank border-1px"></div>
-    <ratingcontrol></ratingcontrol>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import ShopCardControl from 'component/shopcardcontrol/ShopCardControl';
   import RatingControl from 'component/ratingcontrol/RatingControl';
+  import BScroll from 'better-scroll';
 
   export default {
     props: {
@@ -48,9 +67,29 @@
       }
     },
 
+    created () {
+      console.log('....created');
+    },
+
     components: {
       'shopcardcontrol': ShopCardControl,
       'ratingcontrol': RatingControl
+    },
+
+    computed: {
+      dialogStatus () {
+        if (this.food.name) {
+          this.$nextTick(() => {
+            console.log('....BScroll');
+            this.scroll = new BScroll(this.$refs.foodScroll, {
+              click: true
+            });
+          });
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
 
     methods: {
@@ -144,4 +183,33 @@
         line-height: 24px
         color: rgb(77, 85, 93)
 
+    .ratingControl-container
+      border-1px-bottom(rgba(7, 17, 27, 0.1))
+    .rating-list-wrapper
+      padding: 0px 18px
+      .rating-item
+        padding: 16px 0px
+        border-1px-bottom(rgba(7, 17, 27, 0.1))
+        .user-info
+          .time, .name
+            font-size: 12px
+            color rgb(147, 153, 159)
+          .name
+            margin-right: 6px
+            float: right
+          .avatar
+            width: 12px
+            height: 12px
+            border-radius: 50%
+            float: right
+        .user-rating
+          margin-top: 12px
+          .icon-thumb_up, .icon-thumb_down
+            font-size: 12px
+            color: rgb(0, 160, 220)
+          .icon-thumb_down
+            color: rgb(147, 153, 159)
+          .text
+            font-size: 12px
+            margin-left: 4px
 </style>

@@ -1,27 +1,53 @@
 <template>
-  <div class="control">
+  <div class="ratingControl">
     <div class="title">商品评价</div>
     <div class="type-choose-wrapper border-1px">
-      <span class="block positive active">全部</span>
-      <span class="block positive">推荐</span>
-      <span class="block negative">吐槽</span>
+      <span class="block positive" :class="{'active':ratingType===0}"
+            @click="chooseType(0)">全部</span>
+      <span class="block positive" :class="{'active':ratingType===1}"
+            @click="chooseType(1)">推荐</span>
+      <span class="block negative" :class="{'active':ratingType===2}"
+            @click="chooseType(2)">吐槽</span>
     </div>
-    <div class="content-choose-wrapper">
-      <span class="icon-check_circle"></span>
+    <div class="content-choose-wrapper" @click="chooseHaveContent()">
+      <span class="icon-check_circle" :class="{'haveContent': showHaveContent}"></span>
       <span class="title">只看有内容的评价</span>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  export default {
+    props: {
+      ratingType: {
+        type: Number,
+        default: 0
+      },
+      showHaveContent: {
+        type: Boolean,
+        default: true
+      }
+    },
+
+    methods: {
+      chooseType (type) {
+        this.ratingType = type;
+        this.$emit('chooseType', type);
+      },
+      chooseHaveContent () {
+        this.showHaveContent = !this.showHaveContent;
+        this.$emit('chooseHaveContent', this.showHaveContent);
+      }
+    }
+  };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixin.styl";
 
-  .control
+  .ratingControl
     background: #fff
-    padding: 18px
+    padding: 18px 18px 12px 18px
     font-size: 0px
     .title
       font-size: 14px
@@ -48,11 +74,13 @@
       display: inline-flex
       align-items: center
       justify-content: center
-      padding: 12px 0px
+      padding-top: 12px
       .icon-check_circle
         font-size: 24px
         color: rgb(147, 153, 159)
         display: inline-block
+        &.haveContent
+          color: #00c850
       .title
         margin-left: 4px
         font-size: 12px

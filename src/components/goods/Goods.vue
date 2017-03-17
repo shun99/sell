@@ -37,9 +37,8 @@
     <shopcard class="shopCard" :selectFoods="shopCardFoods" :deliveryPrice="seller.deliveryPrice"
               :minTotalPrice="seller.minPrice"></shopcard>
     <div v-show="selectFood.name">
-      <food class="food" :food="selectFood" @back="closeFoodDetail()"></food>
+      <food class="food-container" :food="selectFood" @back="closeFoodDetail()"></food>
     </div>
-
   </div>
 </template>
 
@@ -262,19 +261,20 @@
                 .old
                   font-size: 14px
                   color: rgb(147, 153, 159)
-
             .control
               position: absolute
               right: 0px
               bottom: 6px
     .shopCard
       position: fixed
+      z-index: 200
       bottom: 0px
       left: 0px
-    .food
+    .food-container
       position: fixed
+      z-index: 100
       top: 0px
       left: 0px
+      bottom: 48px
       width: 100%
-      height: 100%
 </style>
