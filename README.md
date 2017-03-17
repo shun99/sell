@@ -215,3 +215,21 @@ computed: {
 # 购物车商品列表
 # 添加弹出动画
 在chrome中会颤动，但在手机上不会出现。完善细节
+
+# 商品详情
+- 占位图
+
+```
+ .header-wrapper
+      position: relative
+      width: 100%
+      height: 0px
+      padding-bottom: 100%
+      img
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+```
+

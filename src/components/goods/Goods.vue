@@ -14,7 +14,7 @@
           <li v-for="(goods, index) in goodsList" ref="foodList">
             <h1 class="title">{{goods.name}}</h1>
             <ul class="food-wrapper">
-              <li v-for="(food, index) in goods.foods" class="food-item border-1px">
+              <li v-for="(food, index) in goods.foods" class="food-item border-1px" @click="openFoodDetail(food)">
                 <img class="icon" width="57" height="57" :src="food.icon">
                 <div class="content">
                   <div class="name">{{food.name}}</div>
@@ -36,6 +36,10 @@
     </div>
     <shopcard class="shopCard" :selectFoods="shopCardFoods" :deliveryPrice="seller.deliveryPrice"
               :minTotalPrice="seller.minPrice"></shopcard>
+    <div v-show="selectFood.name">
+      <food class="food" :food="selectFood" @back="closeFoodDetail()"></food>
+    </div>
+
   </div>
 </template>
 
@@ -43,6 +47,7 @@
   import BScroll from 'better-scroll';
   import ShopCard from 'component/shopcard/ShopCard';
   import ShopCardControl from 'component/shopcardcontrol/ShopCardControl';
+  import food from 'component/food/Food';
 
   const NO_ERR = 0;
   export default{
@@ -53,13 +58,15 @@
         goodsList: [],
         scrollY: 0,
         classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
-        listHeight: []
+        listHeight: [],
+        selectFood: {}
       };
     },
 
     components: {
       'shopcard': ShopCard,
-      'shopcardcontrol': ShopCardControl
+      'shopcardcontrol': ShopCardControl,
+      food
     },
 
     created () {
@@ -130,6 +137,17 @@
         let foodList = this.$refs.foodList;
         let el = foodList[index];
         this.foodsScroll.scrollToElement(el, 300);
+      },
+
+      openFoodDetail (food) {
+        if (!event._constructed) {
+          return;
+        }
+        this.selectFood = food;
+      },
+
+      closeFoodDetail () {
+        this.selectFood = {};
       }
     }
   };
@@ -253,4 +271,10 @@
       position: fixed
       bottom: 0px
       left: 0px
+    .food
+      position: fixed
+      top: 0px
+      left: 0px
+      width: 100%
+      height: 100%
 </style>
