@@ -232,4 +232,4 @@ computed: {
         width: 100%
         height: 100%
 ```
-
+# 商品详情内数据联动

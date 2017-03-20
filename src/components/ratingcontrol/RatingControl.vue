@@ -2,12 +2,12 @@
   <div class="ratingControl">
     <div class="title">商品评价</div>
     <div class="type-choose-wrapper border-1px">
+      <span class="block positive" :class="{'active':ratingType===2}"
+            @click="chooseType(2)">{{desc.all}}<span class="num">{{ratings.length}}</span></span>
       <span class="block positive" :class="{'active':ratingType===0}"
-            @click="chooseType(0)">全部</span>
-      <span class="block positive" :class="{'active':ratingType===1}"
-            @click="chooseType(1)">推荐</span>
-      <span class="block negative" :class="{'active':ratingType===2}"
-            @click="chooseType(2)">吐槽</span>
+            @click="chooseType(0)">{{desc.positive}}<span class="num">{{positives.length}}</span></span>
+      <span class="block negative" :class="{'active':ratingType===1}"
+            @click="chooseType(1)">{{desc.negative}}<span class="num">{{negatives.length}}</span></span>
     </div>
     <div class="content-choose-wrapper" @click="chooseHaveContent()">
       <span class="icon-check_circle" :class="{'haveContent': showHaveContent}"></span>
@@ -17,26 +17,63 @@
 </template>
 
 <script type="text/ecmascript-6">
+  const POSITIVE = 0;
+  const NEGATIVE = 1;
+  const ALL = 2;
+
   export default {
     props: {
       ratingType: {
         type: Number,
-        default: 0
+        default: ALL
       },
       showHaveContent: {
         type: Boolean,
         default: true
+      },
+      ratings: {
+        type: Array,
+        default () {
+          return [];
+        }
+      },
+      desc: {
+        type: Object,
+        default () {
+          return {
+            all: '全部',
+            positive: '满意',
+            negative: '不满意'
+          };
+        }
+      }
+    },
+
+    computed: {
+      positives () {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === POSITIVE;
+        });
+      },
+      negatives () {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === NEGATIVE;
+        });
       }
     },
 
     methods: {
       chooseType (type) {
-        this.ratingType = type;
+        if (!event._constructed) {
+          return;
+        }
         this.$emit('chooseType', type);
       },
       chooseHaveContent () {
-        this.showHaveContent = !this.showHaveContent;
-        this.$emit('chooseHaveContent', this.showHaveContent);
+        if (!event._constructed) {
+          return;
+        }
+        this.$emit('chooseHaveContent', !this.showHaveContent);
       }
     }
   };
@@ -66,10 +103,14 @@
           background: rgba(0, 160, 220, 0.2)
           &.active
             background: rgb(0, 160, 220)
+            color: #fff
         &.negative
           background: rgba(77, 85, 93, 0.2)
           &.active
             background: rgb(77, 85, 93)
+            color: #fff
+        .num
+          margin-left: 2px
     .content-choose-wrapper
       display: inline-flex
       align-items: center

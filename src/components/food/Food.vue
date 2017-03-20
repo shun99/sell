@@ -33,11 +33,14 @@
       </div>
       <div class="blank border-1px"></div>
       <div class="ratingControl-container border-1px">
-        <ratingcontrol></ratingcontrol>
+        <ratingcontrol :ratingType="selectType" :ratings="food.ratings"
+                       :showHaveContent="haveContent" :desc="desc"
+                       @chooseType="selectRating" @chooseHaveContent="isHaveContent"></ratingcontrol>
       </div>
       <div class="rating-list-wrapper">
         <ul>
-          <li class="rating-item border-1px" v-for="rating in food.ratings">
+          <li class="rating-item border-1px" v-for="rating in food.ratings"
+              v-show="showItem(rating.rateType,rating.text)">
             <div class="user-info">
               <span class="time">{{rating.rateTime}}</span>
               <img class="avatar" :src="rating.avatar">
@@ -60,15 +63,22 @@
   import BScroll from 'better-scroll';
 
   export default {
+    data () {
+      return {
+        'haveContent': false,
+        'selectType': 2
+      };
+    },
     props: {
       food: {
         type: Object,
         default: {}
+      },
+      desc: {
+        all: '全部',
+        positive: '推荐',
+        negative: '吐槽'
       }
-    },
-
-    created () {
-      console.log('....created');
     },
 
     components: {
@@ -80,7 +90,6 @@
       dialogStatus () {
         if (this.food.name) {
           this.$nextTick(() => {
-            console.log('....BScroll');
             this.scroll = new BScroll(this.$refs.foodScroll, {
               click: true
             });
@@ -95,6 +104,31 @@
     methods: {
       back () {
         this.$emit('back');
+      },
+
+      selectRating (type) {
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+
+      isHaveContent (showHaveContent) {
+        this.haveContent = showHaveContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+
+      showItem (type, text) {
+        if (!text && this.haveContent) {
+          return false;
+        }
+        if (this.selectType === 2) {
+          return true;
+        } else {
+          return this.selectType === type;
+        }
       }
     }
   };

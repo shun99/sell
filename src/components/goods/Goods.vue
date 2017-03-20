@@ -275,6 +275,7 @@
       z-index: 100
       top: 0px
       left: 0px
+      overflow: hidden
       bottom: 48px
       width: 100%
 </style>
