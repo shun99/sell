@@ -233,3 +233,16 @@ computed: {
         height: 100%
 ```
 # 商品详情内数据联动
+# 完善商品详情
+切记在创建BScroll时先判断scroll是否已经存在，如果存在了再次创建可能点击事件会响应两次。
+```
+if (!this.scroll) {
+            this.$nextTick(() => {
+              this.scroll = new BScroll(this.$refs.foodScroll, {
+                click: true
+              });
+            });
+          } else {
+            this.scroll.refresh();
+          }
+```

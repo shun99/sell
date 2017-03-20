@@ -22,6 +22,7 @@
 
     methods: {
       decreaseCard () {
+        console.log('decreaseCard....' + event);
         if (!event._constructed) {
           return;
         }
@@ -30,6 +31,7 @@
         }
       },
       increaseCard () {
+        console.log('increaseCard....' + event);
         if (!event._constructed) {
           return;
         }
