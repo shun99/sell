@@ -140,7 +140,6 @@
       },
 
       firstAddFood () {
-        console.log('firstAddFood....');
         if (!event._constructed) {
           return;
         }

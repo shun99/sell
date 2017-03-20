@@ -246,3 +246,4 @@ if (!this.scroll) {
             this.scroll.refresh();
           }
 ```
+# rating.vue
