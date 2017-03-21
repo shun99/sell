@@ -247,3 +247,4 @@ if (!this.scroll) {
           }
 ```
 # rating.vue
+# seller.vue ui
