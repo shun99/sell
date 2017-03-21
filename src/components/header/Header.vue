@@ -209,7 +209,7 @@
       filter: blur(10px)
     .detail-wrapper
       position: fixed
-      z-index: 100
+      z-index: 500
       top: 0px
       left: 0px
       width: 100%

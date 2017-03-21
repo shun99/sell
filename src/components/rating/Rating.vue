@@ -138,9 +138,10 @@
     position: absolute
     top: 172px
     left: 0px
-    bottom: 46px
+    bottom: 0px
     right: 0px
     overflow: hidden
+    font-size 0px
     .overview-wrapper
       display: flex
       padding: 18px 0px
@@ -152,6 +153,9 @@
         flex: 0 0 137px
         width: 137px
         border-right: 1px solid rgba(7, 17, 27, 0.1)
+        @media only screen and (max-width: 320px)
+          flex: 0 0 120px
+          width: 120px
         .score
           line-height: 28px
           font-size: 24px
@@ -183,11 +187,15 @@
             color: rgb(7, 17, 27)
           .star-container
             margin-left: 12px
+            @media only screen and (max-width: 320px)
+              margin-left: 4px
           .num
             display: inline-block
             margin-left: 12px
             font-size: 12px
             color: rgb(255, 153, 0)
+            @media only screen and (max-width: 320px)
+              margin-left: 4px
         .delivery-wrapper
           .title
             display: inline-block
@@ -197,6 +205,8 @@
             margin-left: 12px
             font-size: 12px
             color: rgb(147, 153, 159)
+            @media only screen and (max-width: 320px)
+              margin-left: 4px
     .rating-control-container
       border-1px-bottom(rgba(7, 17, 27, 0.1))
     .rating-list-wrapper
@@ -240,13 +250,14 @@
             .icon-thumb_up, .recommend
               display: inline-block
               margin: 0 8px 4px 0
-              font-size: 9px
+              font-size: 12px
+              line-height: 16px
             .icon-thumb_up
               color: rgb(0, 160, 220)
             .recommend
               padding: 0 6px
               border: 1px solid rgba(7, 17, 27, 0.1)
-              border-radius: 1px
+              border-radius: 2px
               color: rgb(147, 153, 159)
               background: #fff
 
