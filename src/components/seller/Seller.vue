@@ -9,6 +9,10 @@
             <span class="rating-num">({{seller.ratingCount}})</span>
             <span class="pay-num">月售{{seller.sellCount}}单</span>
           </div>
+          <div class="favorite-wrapper" @click="favoriteStatus()">
+            <span class="icon-favorite" :class="{'activity':favorite}"/>
+            <p class="favorite-text">{{favoriteStr}}</p>
+          </div>
         </div>
       </div>
       <div class="des-wrapper">
@@ -72,11 +76,15 @@
 <script type="text/ecmascript-6">
   import Star from 'component/star/Star';
   import BScroll from 'better-scroll';
+  import {saveToLocal, loadFromLocal} from '../../common/js/LocalUtils';
 
   export default{
     data () {
       return {
-        classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+        classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
+        favorite: (() => {
+          return loadFromLocal(this.seller.id, 'favorite', false);
+        })()
       };
     },
     props: {
@@ -90,18 +98,25 @@
     },
     created () {
       this.$nextTick(() => {
-        console.log(this.seller);
         this._initScroll();
         this._initPicScroll();
       });
     },
     watch: {
       'seller' () {
-        console.log(this.seller);
         this.$nextTick(() => {
           this._initScroll();
           this._initPicScroll();
         });
+      }
+    },
+    computed: {
+      favoriteStr () {
+        if (!this.favorite) {
+          return '收藏';
+        } else {
+          return '已收藏';
+        }
       }
     },
     methods: {
@@ -131,6 +146,10 @@
             }
           });
         }
+      },
+      favoriteStatus (event) {
+        this.favorite = !this.favorite;
+        saveToLocal(this.seller.id, 'favorite', this.favorite);
       }
     }
   };
@@ -150,6 +169,7 @@
     .header-info-wrapper
       padding: 18px 18px 0px 18px
       .content-wrapper
+        position: relative
         padding-bottom: 18px
         border-1px-bottom(rgba(7, 17, 27, 0.1))
         .name
@@ -170,6 +190,22 @@
             margin-left: 8px
           .pay-num
             margin-left: 12px
+        .favorite-wrapper
+          display: flex
+          width: 36px
+          align-items: center
+          flex-direction: column
+          position: absolute
+          right: 0px
+          top: 0px
+          .icon-favorite
+            font-size: 24px
+            color: #d4d6d9
+            &.activity
+              color: rgb(240, 20, 20)
+          .favorite-text
+            font-size: 12px
+            color: rgb(77, 85, 93)
     .des-wrapper
       display: flex
       padding: 18px 10px

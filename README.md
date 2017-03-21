@@ -296,3 +296,49 @@ watch: {
         }
       }
 ```
+# 喜欢数据保存到本的
+> 为了区分不同商品，需要一个唯一的商品id，例如此处取url
+```
+http://localhost:8080/?id=123#/sellers
+```
+中的id作为唯一标示。
+
+- App.vue中，给Seller添加唯一标识
+
+```
+ //添加标识
+ data () {
+      return {
+        seller: {
+          id: (() => {
+            let queryParam = urlParse();
+            return queryParam.id;
+          })(),
+        }
+      };
+    }
+ //赋值数据
+ methods: {
+       getSeller: function () {
+         this.$http.get('/api/seller').then(response => {
+           if (response.body.errNo === NO_ERR) {
+             /***
+              * 这样回覆盖原来seller已有的数据。
+              * this.seller = response.body.data;
+              * 在不覆盖原来数据的前提下添加数据。
+              */
+             this.seller = Object.assign({}, this.seller, response.body.data);
+           }
+         });
+       }
+     },
+```
+- 在使用的地方取出id
+
+```
+favoriteStatus (event) {
+        this.favorite = !this.favorite;
+        saveToLocal(this.seller.id, 'favorite', this.favorite);
+      }
+```
+
