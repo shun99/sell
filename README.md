@@ -248,3 +248,51 @@ if (!this.scroll) {
 ```
 # rating.vue
 # seller.vue ui
+# seller的滚动
+## 竖向滚动
+当刷新Seller页面是，App.vue的网络请求是异步进行的，seller布局会完成，seller还没获取到，
+此时_initScroll
+```
+ created () {
+      this.$nextTick(() => {
+        console.log(this.seller);
+        this._initScroll();
+      });
+    },
+```
+无法获取准确高度，因此就要监听seller，当seller获取到时，在刷新Scroll即可
+```
+watch: {
+      'seller' () {
+        console.log(this.seller);
+        this.$nextTick(() => {
+          this._initScroll();
+        });
+      }
+    },
+```
+当只使用watch时，当从别的vue切换到seller.vue时，seller并没刷新，因此此时_initScroll也不行，
+当时从别的vue进入seller.vue会执行created，所以在created里_initScroll即可。所以两者应该配合使用。
+# 横向滚动
+> 切记首先计算横向滚动的宽度。
+
+```
+  _initPicScroll () {
+        if (this.seller.pics) {
+          let picWidth = 120;
+          let margin = 6;
+          let width = (picWidth + margin) * this.seller.pics.length - margin;
+          this.$refs.picList.style.width = width + 'px';
+          this.$nextTick(() => {
+            if (!this.picScroll) {
+              this.picScroll = new BScroll(this.$refs.picListWrapper, {
+                scrollX: true,
+                eventPassthrough: 'vertical'
+              });
+            } else {
+              this.picScroll.refresh();
+            }
+          });
+        }
+      }
+```

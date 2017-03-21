@@ -2,7 +2,9 @@
   <div id="app">
     <a-header v-bind:seller="seller"></a-header>
     <a-tab></a-tab>
-    <router-view :seller="seller"></router-view>
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
 
