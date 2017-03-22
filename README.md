@@ -341,4 +341,19 @@ favoriteStatus (event) {
         saveToLocal(this.seller.id, 'favorite', this.favorite);
       }
 ```
+# 部署到生产环境
+## 代码打包
+```
+npm run build
+```
+生成dist目录，线上环境所需要的所有资源都在dist目录下。
+
+## 简单配置一个服务器 prod.server.js
+```
+router.get('/', function (req, res, next) {
+  req.url = '/index.html';
+  next();
+});
+```
+服务器中的/index.html是指dist目录下的。
 
